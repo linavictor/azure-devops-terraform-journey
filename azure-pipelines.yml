@@ -1,0 +1,47 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  terraformWorkingDir: 'terraform'
+
+stages:
+- stage: Plan
+  displayName: Terraform Plan
+  jobs:
+  - job: PlanJob
+    steps:
+    - task: AzureCLI@2
+      displayName: Terraform Init & Plan
+      inputs:
+        azureSubscription: 'azure-terraform-conn'
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          cd $(terraformWorkingDir)
+          terraform init
+          terraform plan
+
+- stage: Apply
+  displayName: Terraform Apply
+  dependsOn: Plan
+  condition: succeeded()
+  jobs:
+  - deployment: ApplyDeployment
+    environment: terraform-dev
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureCLI@2
+            displayName: Terraform Apply
+            inputs:
+              azureSubscription: 'azure-terraform-conn'
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                cd $(terraformWorkingDir)
+                terraform init
+                terraform apply -auto-approve
