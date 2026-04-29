@@ -1,0 +1,53 @@
+name: Terraform AI Generator CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1️⃣ Checkout code
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    # 2️⃣ Setup Python
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    # 3️⃣ Install dependencies
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    # 4️⃣ Generate Terraform (mock run)
+    - name: Generate Terraform
+      run: |
+        mkdir -p output
+        echo '// main.tf
+        resource "null_resource" "test" {}' > output/main.tf
+
+    # 5️⃣ Setup Terraform
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    # 6️⃣ Terraform Init
+    - name: Terraform Init
+      run: terraform init
+      working-directory: output
+
+    # 7️⃣ Terraform Format Check
+    - name: Terraform Format
+      run: terraform fmt -check
+      working-directory: output
+
+    # 8️⃣ Terraform Validate
+    - name: Terraform Validate
+      run: terraform validate
+      working-directory: output
