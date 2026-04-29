@@ -87,8 +87,17 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
-      working-directory: iac-ai-generator/output        
+      working-directory: iac-ai-generator/output    
 
+    - name: Create tfvars
+      run: |
+        cat <<EOF > iac-ai-generator/output/terraform.tfvars
+        resource_group_name = "demo-rg"
+        tenant_id           = "00000000-0000-0000-0000-000000000000"
+        sql_admin           = "adminuser"
+        sql_password        = "Password123!"
+        EOF      
+        
     - name: Terraform Plan
       run: terraform plan -out=tfplan
       working-directory: iac-ai-generator/output
