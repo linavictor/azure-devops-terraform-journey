@@ -96,8 +96,9 @@ jobs:
         tenant_id           = "00000000-0000-0000-0000-000000000000"
         sql_admin           = "adminuser"
         sql_password        = "Password123!"
-        EOF      
-        
+        EOF
+      working-directory: iac-ai-generator/output
+
     - name: Terraform Plan
       run: terraform plan -out=tfplan
       working-directory: iac-ai-generator/output
