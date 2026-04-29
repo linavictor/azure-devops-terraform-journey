@@ -30,11 +30,29 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
-    - name: Generate Terraform (mock)
+    # - name: Generate Terraform (mock)
+    #   run: |
+    #     mkdir -p output
+
+    #     cat <<EOF > output/main.tf
+    #     resource "null_resource" "test" {}
+    #     EOF
+
+    #     cat <<EOF > output/outputs.tf
+    #     output "test_id" {
+    #       value = null_resource.test.id
+    #     }
+    #     EOF
+    #   working-directory: iac-ai-generator
+
+    - name: Run FastAPI & generate Terraform
       run: |
-        mkdir -p output
-        echo 'resource "null_resource" "test" {}' > output/main.tf
-      working-directory: iac-ai-generator
+        cd iac-ai-generator
+        uvicorn app.main:app --host 127.0.0.1 --port 8000 &
+        sleep 5
+        curl -X POST http://127.0.0.1:8000/generate \
+          -H "Content-Type: application/json" \
+          -d '{"requirement":"Create AKS cluster"}'
 
     - name: Terraform Init
       run: terraform init
