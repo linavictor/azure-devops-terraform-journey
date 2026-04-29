@@ -91,6 +91,7 @@ jobs:
 
     - name: Create tfvars
       run: |
+        mkdir -p iac-ai-generator/output
         cat <<EOF > iac-ai-generator/output/terraform.tfvars
         resource_group_name = "demo-rg"
         tenant_id           = "00000000-0000-0000-0000-000000000000"
