@@ -9,3 +9,10 @@ crash.log
 
 # OS files
 .DS_Store
+
+venv/
+__pycache__/
+*.pyc
+.env
+output/*
+!.gitkeep
