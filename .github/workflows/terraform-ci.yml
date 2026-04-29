@@ -54,6 +54,29 @@ jobs:
           -H "Content-Type: application/json" \
           -d '{"requirement":"Create AKS cluster"}'
 
+    - name: Override with Mock Terraform (safe)
+      run: |
+        cat <<EOF > iac-ai-generator/output/main.tf
+        terraform {
+          required_providers {
+            null = {
+              source  = "hashicorp/null"
+              version = "~> 3.0"
+            }
+          }
+        }
+
+        provider "null" {}
+
+        resource "null_resource" "example" {}
+        EOF
+
+        cat <<EOF > iac-ai-generator/output/outputs.tf
+        output "example_id" {
+          value = null_resource.example.id
+        }
+        EOF          
+
     - name: Terraform Init
       run: terraform init
       working-directory: iac-ai-generator/output
@@ -61,3 +84,12 @@ jobs:
     - name: Terraform Validate
       run: terraform validate
       working-directory: iac-ai-generator/output
+
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
+      working-directory: iac-ai-generator/output
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve tfplan
+      working-directory: iac-ai-generator/output
+     
