@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from app.prompt_builder import build_prompt
 import os
 
 app = FastAPI()
