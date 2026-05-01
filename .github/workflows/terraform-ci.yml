@@ -69,6 +69,11 @@ jobs:
       # -------------------------------
       # 🔥 (Optional) Mock for Plan/Apply
       # -------------------------------
+      - name: Clean output completely
+        run: |
+          rm -rf iac-ai-generator/output
+          mkdir -p iac-ai-generator/output
+
       - name: Create Mock Terraform
         run: |
           mkdir -p iac-ai-generator/output
