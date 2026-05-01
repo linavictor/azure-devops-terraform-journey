@@ -75,24 +75,24 @@ jobs:
           mkdir -p iac-ai-generator/output
 
           cat <<EOF > iac-ai-generator/output/main.tf
-            terraform {
-              required_providers {
-                null = {
-                  source = "hashicorp/null"
-                }
+          terraform {
+            required_providers {
+              null = {
+                source = "hashicorp/null"
               }
             }
+          }
 
-            provider "null" {}
+          provider "null" {}
 
-            resource "null_resource" "example" {}
+          resource "null_resource" "example" {}
                 EOF
 
-            cat <<EOF > iac-ai-generator/output/outputs.tf
-            output "example_id" {
-              value = null_resource.example.id
-            }
-                  EOF
+          cat <<EOF > iac-ai-generator/output/outputs.tf
+          output "example_id" {
+            value = null_resource.example.id
+          }
+                EOF
 
       - name: Terraform Init (Mock)
         run: terraform init
