@@ -284,11 +284,11 @@ output "key_vault" {
 
 # -------- Main API --------
 @app.post("/generate")
-def generate_iac(req: Request):
+def generate_iac(req: Request, cloud: str):
 
-    print("Request:", req.requirement)
+    print("Request:", req.requirement, cloud)
 
-    prompt = build_prompt(req.requirement)
+    prompt = build_prompt(req.requirement, cloud)
     req_text = req.requirement.lower()
 
     # -------- Smart Routing --------
