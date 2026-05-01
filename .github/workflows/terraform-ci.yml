@@ -86,13 +86,13 @@ jobs:
             provider "null" {}
 
             resource "null_resource" "example" {}
-            EOF
+                EOF
 
-                      cat <<EOF > iac-ai-generator/output/outputs.tf
+            cat <<EOF > iac-ai-generator/output/outputs.tf
             output "example_id" {
               value = null_resource.example.id
             }
-            EOF
+                  EOF
 
       - name: Terraform Init (Mock)
         run: terraform init
