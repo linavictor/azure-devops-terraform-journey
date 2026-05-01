@@ -1,11 +1,12 @@
-def build_prompt(user_input: str):
+def build_prompt(requirement, cloud):
     return f"""
+    Generate
 You are a senior Azure DevOps engineer.
 
-Generate production-grade Terraform code for Azure.
+Generate production-grade Terraform code for {cloud}.
 
 Requirements:
-{user_input}
+{requirement}
 
 Rules:
 - Use azurerm provider
