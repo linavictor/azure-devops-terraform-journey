@@ -52,7 +52,7 @@ jobs:
         sleep 5
         curl -X POST http://127.0.0.1:8000/generate \
           -H "Content-Type: application/json" \
-          -d '{"requirement":"Create AKS cluster"}'         
+          -d '{"requirement": "Create Kubernetes cluster", "cloud": "aws"}'
 
     - name: Terraform Init
       run: terraform init
