@@ -66,6 +66,10 @@ jobs:
         run: terraform validate
         working-directory: iac-ai-generator/output
 
+      - name: Terraform Format Check
+        run: terraform fmt -check
+        working-directory: iac-ai-generator/output  
+
       # -------------------------------
       # 🔥 (Optional) Mock for Plan/Apply
       # -------------------------------
