@@ -64,8 +64,16 @@ class TerraformAgent:
             
             # Call LLM
             print("🔄 Calling AI model...")
-            llm_response = call_llm(prompt, model=self.model)
-            print(f"✅ Received {len(llm_response)} characters from LLM\n")
+            
+            # Try real API first
+            try:
+                llm_response = call_llm(prompt, model=self.model, use_mock=False)
+                print(f"✅ Received {len(llm_response)} characters from LLM\n")
+            except Exception as api_error:
+                print(f"⚠️  Real API unavailable: {str(api_error)[:50]}...")
+                print(f"🔄 Using demo/mock mode instead...\n")
+                llm_response = call_llm(prompt, model=self.model, use_mock=True)
+                print(f"✅ Generated demo Terraform code ({len(llm_response)} characters)\n")
             
             # Parse output
             parsed_code = parse_terraform_output(llm_response)
