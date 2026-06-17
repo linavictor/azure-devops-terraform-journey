@@ -23,3 +23,11 @@ data = json.loads(response)
 
 print(data["name"])
 print(data["status"])
+
+with open("cluster.json", "w") as file:
+    json.dump(cluster, file, indent=2)
+
+print(f"VM Name : {cluster['name']}")
+print(f"OS : {cluster['os']}")
+print(f"CPU : {cluster['cpu']}")
+print(f"Memory : {cluster['memory']} GB")

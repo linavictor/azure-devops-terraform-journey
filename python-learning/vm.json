@@ -1,0 +1,8 @@
+{
+  "name": "prod-vm-01",
+  "os": "Linux",
+  "cpu": 4,
+  "memory": 16
+}
+
+
