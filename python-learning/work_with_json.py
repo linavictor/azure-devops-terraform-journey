@@ -35,3 +35,15 @@ print(f"VM Name : {cluster['name']}")
 print(f"OS : {cluster['os']}")
 print(f"CPU : {cluster['cpu']}")
 print(f"Memory : {cluster['memory']} GB")
+
+
+content ='''
+{
+  "name": "aks-prod",
+  "cpu": 90,
+  "region": "Central India"
+}
+'''
+cluster = json.loads(content)
+
+print (f"Cluster {cluster['name']} is running in {cluster['region']}")
