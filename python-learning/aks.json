@@ -1,0 +1,5 @@
+[
+  {"name":"aks-dev","cpu":40},
+  {"name":"aks-test","cpu":65},
+  {"name":"aks-prod","cpu":90}
+]

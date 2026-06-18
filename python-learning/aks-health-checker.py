@@ -1,17 +1,16 @@
-clusters = [
-    {"name": "aks-dev", "cpu": 45},
-    {"name": "aks-test", "cpu": 60},
-    {"name": "aks-prod", "cpu": 90}
-]
+import json
+with open("aks.json","r") as file:
+    cluster = json.load(file)
 
-def aks_health(clusters):
-    for cluster in clusters:
-        if cluster["cpu"] >= 65:
-            print(f"{cluster["name"]} - Healthy")
-        elif cluster["cpu"] >= 80:
-            print(f"{cluster["name"]} - Unhealthy")    
+print(cluster)
+
+def aks_health(cluster):
+    for c in cluster:
+        if c["cpu"] >= 65:
+            print(f"{c['name']} - Healthy")
+        elif c["cpu"] >= 80:
+            print(f"{c['name']} - Unhealthy")    
         else:
-            print(f"{cluster["name"]} - High CPU")    
-        return print("== AKS Health Check ==")
+            print(f"{c['name']} - High CPU")    
 
-print(aks_health(clusters))
+aks_health(cluster)
